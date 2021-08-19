@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Home } from './screens/Home';
+import { BaseContainer } from './navigation/routes';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BaseContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,0 +1,1 @@
+export {MyMapComponent} from "./mapContainer"

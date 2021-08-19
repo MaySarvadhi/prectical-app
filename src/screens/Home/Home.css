@@ -1,0 +1,16 @@
+.flag {
+  height: 80px;
+  width: 80px;
+  margin: 10px;
+}
+.react-excel table tr td {
+  border: 1px solid rgb(41, 26, 26);
+  padding: 2px 5px;
+  min-height: 1.9em;
+  height: 1.9em;
+  max-height: 1.9em;
+}
+
+.react-excel {
+  overflow-x: scroll;
+}
