@@ -13,7 +13,6 @@ export const BaseContainer = () => {
   
   useEffect(() => {
     const pathname = window.location.pathname
-    console.log("location", pathname);
   }, []);
 
   return (

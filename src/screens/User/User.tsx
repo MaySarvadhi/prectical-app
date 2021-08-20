@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import FetchDataApi from "../../http/FetchDataApi";
+import Tree from "react-d3-tree";
 
 import {
   withScriptjs,
@@ -21,19 +22,64 @@ const mapData = {
   zoom: 11,
 };
 
+const orgChart = {
+  name: "CEO",
+  children: [
+    {
+      name: "Manager",
+      attributes: {
+        department: "Production",
+      },
+      children: [
+        {
+          name: "Foreman",
+          attributes: {
+            department: "Fabrication",
+          },
+          children: [
+            {
+              name: "Worker",
+            },
+          ],
+        },
+        {
+          name: "Foreman",
+          attributes: {
+            department: "Assembly",
+          },
+          children: [
+            {
+              name: "Worker",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 interface HomeProps {
   text: string;
   lat: any;
   lng: any;
 }
 
+interface treeProps {
+  name: string;
+  children?: any[];
+}
+
 export const User = () => {
   const { state } = useLocation<any>();
   const [countryDetail, setTextValue] = useState(state.item);
   const timeZone = countryDetail.timezones[0];
-  
-
-  useEffect(() => { }, []);
+  const treeObject: any = {
+    name: countryDetail.name,
+    children: countryDetail.borders.map((neighbor: any) => {
+      return { name: neighbor };
+    }),
+  };
+  const [treeData, setTreeData] = useState<treeProps>(treeObject);
   const [time] = useTimeHooks(timeZone);
 
   return (
@@ -50,6 +96,15 @@ export const User = () => {
           <h1>{time}</h1>
         </div>
       </div>
+      {treeData ? (
+        <div
+          id="treeWrapper"
+          className="container"
+          style={{ width: "100em", height: "20em", }}
+        >
+          <Tree data={treeData} pathFunc={"straight"} orientation={"vertical"}/>
+        </div>
+      ) : null}
       <div className="row m-5">
         <div className="col-md-6">
           <text className="text">Name : {countryDetail.name}</text>

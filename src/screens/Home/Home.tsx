@@ -41,9 +41,10 @@ export const Home = () => {
   };
 
   const onTextChange = (text: string) => {
-    let newArray = tempCountries.filter((d:any)=>{
-        let searchValue = d.name.toLowerCase();
-        return searchValue.indexOf(text.toLowerCase()) !== -1;
+    let newArray = tempCountries.filter((d: any) => {
+      let searchValue = d.name.toLowerCase();
+      let searchCapital = d.capital.toLowerCase();
+      return searchValue.indexOf(text.toLowerCase()) !== -1 || searchCapital.indexOf(text.toLowerCase()) !== -1; 
     });
     setCountries(newArray);
   };
