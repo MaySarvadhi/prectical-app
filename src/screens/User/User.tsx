@@ -11,6 +11,7 @@ import {
 import "./User.css";
 import { MyMapComponent } from "../../components/MapContainer";
 import { useTimeHooks } from "../../Hooks/timeHooks";
+import moment from "moment";
 
 const mapData = {
   center: {
@@ -29,9 +30,11 @@ interface HomeProps {
 export const User = () => {
   const { state } = useLocation<any>();
   const [countryDetail, setTextValue] = useState(state.item);
-  const currentDateTime = new Date();
+  const timeZone = countryDetail.timezones[0];
+  
+
   useEffect(() => { }, []);
-  const [time] = useTimeHooks();
+  const [time] = useTimeHooks(timeZone);
 
   return (
     <div>

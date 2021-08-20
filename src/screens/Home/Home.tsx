@@ -4,21 +4,22 @@ import React, { useEffect, useState } from "react";
 
 import FetchDataApi from "../../http/FetchDataApi";
 import { Link } from "react-router-dom";
+import "./Home.css";
 
 export const Home = () => {
   const [countries, setCountries] = useState([]);
+  const [tempCountries, setTempCountries] = useState([]);
   const [columns, setColumns] = useState<any>([]);
 
   const getAllCountries = async () => {
     const countriesData: any = localStorage.getItem("countries");
     const mainData = JSON.parse(countriesData);
-    console.log("mainData", mainData);
     if (mainData) {
       setColumns(Object.keys(mainData[0]));
       setCountries(mainData);
+      setTempCountries(mainData);
     } else {
       const results: any = await FetchDataApi.getAllCountries();
-      console.log("my results", results);
       const countriesArray = results.map((country: any) => {
         return {
           name: country.name,
@@ -35,7 +36,16 @@ export const Home = () => {
       setColumns(Object.keys(countriesArray[0]));
       localStorage.setItem("countries", JSON.stringify(countriesArray));
       setCountries(countriesArray);
+      setTempCountries(countriesArray);
     }
+  };
+
+  const onTextChange = (text: string) => {
+    let newArray = tempCountries.filter((d:any)=>{
+        let searchValue = d.name.toLowerCase();
+        return searchValue.indexOf(text.toLowerCase()) !== -1;
+    });
+    setCountries(newArray);
   };
 
   useEffect(() => {
@@ -54,6 +64,7 @@ export const Home = () => {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Search"
+                  onChange={(e) => onTextChange(e.target.value)}
                 />
               </div>
             </div>
